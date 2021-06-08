@@ -1,0 +1,10 @@
+/Users/jeziellago/Documents/Github/rust-url-shortener/url-shortener/target/rls/debug/deps/futures_channel-58b3662204149bc3.rmeta: /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/lib.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/lock.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/mod.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/queue.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/sink_impl.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/oneshot.rs
+
+/Users/jeziellago/Documents/Github/rust-url-shortener/url-shortener/target/rls/debug/deps/futures_channel-58b3662204149bc3.d: /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/lib.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/lock.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/mod.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/queue.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/sink_impl.rs /Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/oneshot.rs
+
+/Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/lib.rs:
+/Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/lock.rs:
+/Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/mod.rs:
+/Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/queue.rs:
+/Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/mpsc/sink_impl.rs:
+/Users/jeziellago/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.15/src/oneshot.rs:

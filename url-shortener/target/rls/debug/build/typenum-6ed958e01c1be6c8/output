@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/jeziellago/Documents/Github/rust-url-shortener/url-shortener/target/rls/debug/build/typenum-6ed958e01c1be6c8/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/jeziellago/Documents/Github/rust-url-shortener/url-shortener/target/rls/debug/build/typenum-6ed958e01c1be6c8/out/op.rs
