@@ -6,33 +6,51 @@ const TOKENS: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
 const BASE_62: usize = 62;
 
 #[derive(Clone)]
-pub struct ShortenerGenerator {
+pub struct ShortenerGenerator<T>
+where
+    T: UrlPathService + Clone,
+{
+    path_writer: T,
+}
+
+#[derive(Clone)]
+pub struct UrlPathWriter {
     client: Client,
 }
 
-impl ShortenerGenerator {
-    pub fn new(client: Client) -> ShortenerGenerator {
-        return ShortenerGenerator { client: client };
+pub trait UrlPathService {
+    fn save_shortened_url(&self, shortened: &String, source_url: &String);
+    fn get_last_shortened_id(&self) -> usize;
+}
+
+impl UrlPathWriter {
+    pub fn new(client: Client) -> UrlPathWriter {
+        return UrlPathWriter { client: client };
+    }
+    fn get_random_id(&self) -> usize {
+        let time = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_millis();
+        return usize::try_from(time).unwrap();
     }
 
-    pub fn generate_short_url_path(&self, source_url: String) -> String {
-        let mut result: Vec<usize> = Vec::new();
-        let mut num = self.last_id();
-        while num > 0 {
-            let r = num % BASE_62;
-            result.push(r);
-            num = num / BASE_62;
-        }
-        result.reverse();
-        let mut shortened_url_path = String::from("");
-        for item in result.iter() {
-            shortened_url_path.push(TOKENS.chars().nth(*item).unwrap());
-        }
-        self.save_shortened_url(&shortened_url_path, &source_url);
-        return shortened_url_path;
+    fn update_generator(&self, id: usize, conn: redis::Connection) {
+        let mut c = conn;
+        redis::cmd("SET")
+            .arg("generator")
+            .arg(id)
+            .query(&mut c)
+            .unwrap()
     }
+}
 
-    fn save_shortened_url(&self, shortened: &String, source_url: &String) {
+impl UrlPathService for UrlPathWriter {
+    fn save_shortened_url(
+        &self,
+        shortened: &std::string::String,
+        source_url: &std::string::String,
+    ) {
         let mut conn = self.client.get_connection().unwrap();
         redis::cmd("SET")
             .arg(shortened)
@@ -41,7 +59,7 @@ impl ShortenerGenerator {
             .unwrap()
     }
 
-    fn last_id(&self) -> usize {
+    fn get_last_shortened_id(&self) -> usize {
         let mut conn = self.client.get_connection().unwrap();
         let generator: RedisResult<usize> = redis::cmd("INCR").arg("generator").query(&mut conn);
         let id: usize = self.get_random_id();
@@ -57,21 +75,33 @@ impl ShortenerGenerator {
         }
         return id;
     }
+}
 
-    fn update_generator(&self, id: usize, conn: redis::Connection) {
-        let mut c = conn;
-        redis::cmd("SET")
-            .arg("generator")
-            .arg(id)
-            .query(&mut c)
-            .unwrap()
+impl<T> ShortenerGenerator<T>
+where
+    T: UrlPathService + Clone,
+{
+    pub fn new(path_writer: T) -> ShortenerGenerator<T> {
+        return ShortenerGenerator {
+            path_writer: path_writer,
+        };
     }
 
-    fn get_random_id(&self) -> usize {
-        let time = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_millis();
-        return usize::try_from(time).unwrap();
+    pub fn generate_short_url_path(&self, source_url: String) -> String {
+        let mut result: Vec<usize> = Vec::new();
+        let mut num = self.path_writer.get_last_shortened_id();
+        while num > 0 {
+            let r = num % BASE_62;
+            result.push(r);
+            num = num / BASE_62;
+        }
+        result.reverse();
+        let mut shortened_url_path = String::from("");
+        for item in result.iter() {
+            shortened_url_path.push(TOKENS.chars().nth(*item).unwrap());
+        }
+        self.path_writer
+            .save_shortened_url(&shortened_url_path, &source_url);
+        return shortened_url_path;
     }
 }
