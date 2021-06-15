@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+
+<body>
+  <style>
+    .url-shortener {
+      background-color: burlywood;
+      list-style-type: none;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <div class="url-shortener">
+    <h1>Rust Url Shortener</h1>
+
+    <form id="shortenerForm">
+      <label for="sourceurl">URL:</label>
+      <input type="text" id="sourceurl" name="sourceurl"><br><br>
+      <input type="button" onclick="generate()" value="Generate">
+      <br><br>
+      <label id="shortened" name="shortened"></label><br><br>
+    </form>
+  </div>
+
+  <script>
+    function generate() {
+      const url = document.getElementById("sourceurl").value;
+      if (url === "") {
+        alert("URL must not be empty!");
+        return;
+      }
+      if (!isValidHttpUrl(url)) {
+        alert("Invalid URL!");
+        return;
+      }
+      console.log(encodeURIComponent(document.getElementById("sourceurl").value));
+      fetch("new/" + encodeURIComponent(document.getElementById("sourceurl").value))
+        .then(function (response) {
+          return response.text();
+        }).then(function (data) {
+          document.getElementById("shortened").innerHTML = "http://localhost:3030/" + data;
+        }).catch(function () {
+          console.log("Error!");
+        });
+    }
+
+    function isValidHttpUrl(string) {
+      let url;
+
+      try {
+        url = new URL(string);
+      } catch (_) {
+        return false;
+      }
+
+      return url.protocol === "http:" || url.protocol === "https:";
+    }
+  </script>
+</body>
+
+</html>

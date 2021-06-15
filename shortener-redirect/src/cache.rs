@@ -2,6 +2,7 @@ extern crate redis;
 
 use redis::Client;
 use warp::http::Uri;
+use percent_encoding::percent_decode;
 
 pub trait Cache {
     fn new(client: Client) -> ShortenerCache;
@@ -22,11 +23,11 @@ impl Cache for ShortenerCache {
         println!("Tracking for {}", hash);
         let mut con = self.client.get_connection().unwrap();
         let hash_str = hash.as_str();
-        let shortened_url: String = redis::cmd("GET")
+        let mut shortened_url: String = redis::cmd("GET")
             .arg(hash_str)
             .query(&mut con)
             .expect(format!("failed to execute GET for {}", hash_str).as_str());
-
+        shortened_url = percent_decode(shortened_url.as_bytes()).decode_utf8().unwrap().to_string();
         Some(shortened_url.parse::<Uri>().unwrap())
     }
 }
