@@ -1,4 +1,3 @@
-use rand::Rng;
 use redis::{Client, RedisResult};
 use std::convert::{From, TryFrom};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -73,9 +72,6 @@ impl ShortenerGenerator {
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_millis();
-
-        let mut rng = rand::thread_rng();
-        let id: u128 = time * rng.gen_range(1..999);
-        return usize::try_from(id).unwrap();
+        return usize::try_from(time).unwrap();
     }
 }
