@@ -8,6 +8,5 @@ edition = "2018"
 
 [dependencies]
 redis = "0.20.1"
-rand = "0.8.3"
 warp = "0.2"
 tokio = { version = "0.2", features = ["macros"] }
