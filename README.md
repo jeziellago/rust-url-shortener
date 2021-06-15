@@ -1,6 +1,6 @@
 # Rust Url Shortener
 > This is a Rust study project for the purpose of knowledge ONLY.
-![](https://user-images.githubusercontent.com/8452419/122085842-83564b00-cdd9-11eb-8167-11e162d56638.mp4)
+ 
 ## Dependencies
 - tokio
 - warp
@@ -20,3 +20,4 @@ http://localhost:8000
 $ cd shortener-redirect
 $ cargo run
 ```
+[![Video]()](https://user-images.githubusercontent.com/8452419/122085842-83564b00-cdd9-11eb-8167-11e162d56638.mp4)
